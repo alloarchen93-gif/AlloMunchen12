@@ -1,0 +1,269 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AlloMunchen12 ORI - Member</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:#0b0809;
+  color:#fff;
+  font-family:Arial,sans-serif;
+}
+header{
+  background:#100b0d;
+  border-bottom:2px solid #c9002b;
+  padding:18px 7%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:15px;
+}
+.logo{
+  color:#e5b94c;
+  font-size:25px;
+  font-weight:bold;
+}
+.logo span{color:#fff}
+nav{display:flex;gap:22px;flex-wrap:wrap}
+nav a{
+  color:#fff;
+  text-decoration:none;
+  font-size:13px;
+  font-weight:bold;
+}
+nav a:hover{color:#e5b94c}
+.hero{
+  min-height:310px;
+  padding:65px 8%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  background:
+    linear-gradient(90deg,rgba(0,0,0,.92),rgba(0,0,0,.35)),
+    url("background1.png") center/cover;
+  border-bottom:1px solid #4b2630;
+}
+.tag{
+  color:#e5b94c;
+  font-size:12px;
+  letter-spacing:3px;
+  margin-bottom:15px;
+}
+.hero h1{
+  font-size:38px;
+  margin-bottom:12px;
+}
+.hero p{color:#ddd;line-height:1.6}
+main{padding:45px 7%}
+.section-title{
+  color:#e5b94c;
+  font-size:25px;
+  margin-bottom:10px;
+}
+.subtitle{color:#aaa;margin-bottom:25px}
+.games{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:22px;
+}
+.game{
+  background:#171113;
+  border:1px solid #39232a;
+  border-radius:12px;
+  padding:25px;
+  transition:.25s;
+}
+.game:hover{
+  transform:translateY(-5px);
+  border-color:#e5b94c;
+}
+.game .emoji{font-size:38px;margin-bottom:17px}
+.game h3{color:#e5b94c;margin-bottom:10px}
+.game p{color:#aaa;font-size:14px;line-height:1.5;min-height:42px}
+.game a{
+  display:inline-block;
+  margin-top:20px;
+  padding:11px 20px;
+  background:#c9002b;
+  color:#fff;
+  text-decoration:none;
+  border-radius:5px;
+  font-size:13px;
+  font-weight:bold;
+}
+.game a:hover{background:#e5b94c;color:#111}
+.account{
+  margin-top:40px;
+  background:#171113;
+  border:1px solid #39232a;
+  border-radius:12px;
+  padding:25px;
+}
+.account h2{color:#e5b94c;margin-bottom:12px}
+.account p{color:#bbb;margin:8px 0}
+.logout{
+  margin-top:18px;
+  padding:11px 22px;
+  border:0;
+  border-radius:5px;
+  background:#c9002b;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+footer{
+  margin-top:50px;
+  padding:25px;
+  text-align:center;
+  color:#777;
+  border-top:1px solid #39232a;
+  font-size:12px;
+}
+#loading{
+  text-align:center;
+  padding:100px 20px;
+  color:#e5b94c;
+}
+@media(max-width:600px){
+  header{padding:18px 5%}
+  .hero{padding:55px 7%}
+  .hero h1{font-size:29px}
+  main{padding:35px 5%}
+}
+</style>
+</head>
+
+<body>
+
+<div id="loading">Memeriksa akun member...</div>
+
+<div id="memberContent" style="display:none">
+
+<header>
+  <div class="logo">ALLO<span>MUNCHEN12</span></div>
+  <nav>
+    <a href="#home">HOME</a>
+    <a href="#games">GAMES</a>
+    <a href="#live">LIVE</a>
+    <a href="#account">ACCOUNT</a>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <div class="tag">OFFICIAL MEMBER AREA</div>
+  <h1>WELCOME TO ALLO MUNCHEN12</h1>
+  <p>Selamat datang di area member AlloMunchen12.<br>
+  Nikmati berbagai permainan virtual dalam satu tempat.</p>
+</section>
+
+<main>
+
+  <section id="games">
+    <h2 class="section-title">MEMBER GAME CENTER</h2>
+    <p class="subtitle">Pilih permainan virtual yang ingin kamu mainkan.</p>
+
+    <div class="games">
+
+      <div class="game">
+        <div class="emoji">🎰</div>
+        <h3>Virtual Slots</h3>
+        <p>Permainan slot virtual dengan berbagai pilihan tema.</p>
+        <a href="slots.html">MAIN SEKARANG</a>
+      </div>
+
+      <div class="game">
+        <div class="emoji">🎡</div>
+        <h3>Roulette</h3>
+        <p>Nikmati permainan roulette virtual bergaya kasino.</p>
+        <a href="roulette.html">BUKA GAME</a>
+      </div>
+
+      <div class="game">
+        <div class="emoji">🃏</div>
+        <h3>Blackjack</h3>
+        <p>Permainan kartu virtual akan segera hadir.</p>
+        <a href="#" onclick="alert('Blackjack segera hadir!');return false;">SEGERA HADIR</a>
+      </div>
+
+      <div class="game">
+        <div class="emoji">🎲</div>
+        <h3>Dice</h3>
+        <p>Permainan dadu virtual akan segera hadir.</p>
+        <a href="#" onclick="alert('Dice segera hadir!');return false;">SEGERA HADIR</a>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="live" class="account">
+    <h2>LIVE ENTERTAINMENT</h2>
+    <p>Area live entertainment AlloMunchen12.</p>
+    <p>Konten live akan segera tersedia.</p>
+  </section>
+
+  <section id="account" class="account">
+    <h2>MEMBER ACCOUNT</h2>
+    <p>Status: Member aktif</p>
+    <p>Email: <span id="memberEmail">-</span></p>
+    <button class="logout" id="logoutBtn">LOGOUT</button>
+  </section>
+
+</main>
+
+<footer>
+  AlloMunchen12 ORI © 2026<br><br>
+  Virtual entertainment only — no real-money gambling.
+</footer>
+
+</div>
+
+<script type="module">
+import { initializeApp }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+  getAuth,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDM4W1kZfKES2svx8z7IVNWeoF9c8FdDuI",
+  authDomain: "allomunchen12.firebaseapp.com",
+  projectId: "allomunchen12",
+  storageBucket: "allomunchen12.firebasestorage.app",
+  messagingSenderId: "371986330064",
+  appId: "1:371986330064:web:e8f0e62ca8d62f1a2f89d5",
+  measurementId: "G-T043BCC1YX"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+onAuthStateChanged(auth, (user) => {
+  if (user && user.emailVerified) {
+    document.getElementById("loading").style.display = "none";
+    document.getElementById("memberContent").style.display = "block";
+    document.getElementById("memberEmail").textContent = user.email;
+  } else {
+    window.location.href = "login.html";
+  }
+});
+
+document.getElementById("logoutBtn").addEventListener("click", async () => {
+  try {
+    await signOut(auth);
+    window.location.href = "index.html";
+  } catch (error) {
+    alert("Logout gagal: " + error.message);
+  }
+});
+</script>
+
+</body>
+</html>

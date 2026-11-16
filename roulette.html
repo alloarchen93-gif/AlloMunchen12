@@ -1,0 +1,170 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roulette - AlloMunchen12</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #100b0c;
+      color: white;
+    }
+
+    header {
+      background: #1c1012;
+      padding: 22px 7%;
+      border-bottom: 2px solid #b58a32;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      color: #e5b94c;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    header a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 65px 20px 35px;
+    }
+
+    .hero h1 {
+      color: #e5b94c;
+      font-size: 38px;
+      margin-bottom: 15px;
+    }
+
+    .hero p {
+      color: #ccc;
+    }
+
+    .section {
+      padding: 25px 7% 60px;
+    }
+
+    .games {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 25px;
+    }
+
+    .game {
+      background: linear-gradient(145deg, #27171b, #100b0c);
+      border: 1px solid #a77d32;
+      border-radius: 15px;
+      padding: 20px;
+      text-align: center;
+      transition: 0.3s;
+    }
+
+    .game:hover {
+      transform: translateY(-7px);
+      border-color: #e5b94c;
+      box-shadow: 0 8px 20px rgba(229,185,76,0.2);
+    }
+
+    .game-image {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #a77d32;
+    }
+
+    .game h3 {
+      color: #e5b94c;
+      margin-bottom: 10px;
+    }
+
+    .game p {
+      color: #bbb;
+      font-size: 13px;
+      margin-bottom: 18px;
+    }
+
+    .play-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #c9002b, #8b0000);
+      border: 1px solid #e5b94c;
+      padding: 11px 25px;
+      border-radius: 7px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      background: #1c1012;
+      color: #aaa;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .hero h1 {
+        font-size: 29px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">AlloMunchen12</div>
+  <a href="index.html">← Kembali ke Home</a>
+</header>
+
+<section class="hero">
+  <h1>🎡 ROULETTE</h1>
+  <p>Pilih meja Roulette favoritmu!</p>
+</section>
+
+<section class="section">
+  <div class="games">
+
+    <div class="game">
+      <img src="images/roulette-european.jpg" class="game-image" alt="European Roulette">
+      <h3>European Roulette</h3>
+      <p>Roulette klasik dengan satu angka nol.</p>
+      <a href="european-roulette.html" class="play-btn">MAIN SEKARANG</a>
+    </div>
+
+    <div class="game">
+      <img src="images/roulette-american.jpg" class="game-image" alt="American Roulette">
+      <h3>American Roulette</h3>
+      <p>Roulette dengan angka nol dan double zero.</p>
+      <a href="#" class="play-btn">SEGERA HADIR</a>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  Virtual entertainment only — no real-money gambling.
+</footer>
+
+</body>
+</html>

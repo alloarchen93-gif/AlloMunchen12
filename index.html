@@ -1,0 +1,532 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AlloMunchen12 - Virtual Entertainment</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #0b0809;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    /* HEADER */
+    header {
+      background: rgba(20, 11, 13, 0.97);
+      padding: 20px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #a77d32;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+    }
+
+    .logo {
+      color: #e5b94c;
+      font-size: 25px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-shadow: 0 0 15px rgba(229,185,76,0.2);
+    }
+
+    nav {
+      display: flex;
+      gap: 30px;
+    }
+
+    nav a {
+      color: #ddd;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #e5b94c;
+    }
+
+	nav .login-link {
+  background: linear-gradient(135deg, #d0002e, #780014);
+  color: #fff;
+  padding: 10px 18px;
+  border: 1px solid #e5b94c;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+nav .login-link:hover {
+  background: linear-gradient(135deg, #e5b94c, #b58a32);
+  color: #100b0c;
+}
+
+    /* HERO */
+    .hero {
+      min-height: 480px;
+      padding: 100px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      background:
+        linear-gradient(rgba(0,0,0,0.48), rgba(10,4,6,0.85)),
+        url('background1.png');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #e5b94c, #c9002b, #e5b94c, transparent);
+    }
+
+    .hero-tag {
+      color: #e5b94c;
+      letter-spacing: 5px;
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: clamp(38px, 6vw, 68px);
+      font-weight: 900;
+      color: #f2cc68;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      text-shadow: 0 5px 25px rgba(0,0,0,0.9);
+      margin-bottom: 18px;
+    }
+
+    .hero p {
+      color: #ddd;
+      font-size: 16px;
+      margin-bottom: 32px;
+      letter-spacing: 1px;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, #d0002e, #780014);
+      color: white;
+      padding: 16px 38px;
+      border: 1px solid #e5b94c;
+      border-radius: 6px;
+      text-decoration: none;
+      display: inline-block;
+      font-weight: bold;
+      letter-spacing: 2px;
+      box-shadow: 0 5px 25px rgba(201,0,43,0.3);
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: linear-gradient(135deg, #e5b94c, #b58a32);
+      color: #100b0c;
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px rgba(229,185,76,0.3);
+    }
+
+    /* SECTION */
+    .section {
+      padding: 65px 7%;
+    }
+
+    .section-heading {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .section-heading span {
+      color: #c9002b;
+      font-size: 12px;
+      letter-spacing: 4px;
+      font-weight: bold;
+    }
+
+    .section h2 {
+      color: #e5b94c;
+      font-size: 30px;
+      margin-top: 12px;
+      letter-spacing: 1px;
+    }
+
+    .section-heading p {
+      color: #999;
+      font-size: 14px;
+      margin-top: 12px;
+    }
+
+    /* GAME CARDS */
+    .games {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 25px;
+    }
+
+    .game-link {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      min-width: 0;
+    }
+
+    .game {
+      height: 100%;
+      min-height: 220px;
+      background: linear-gradient(145deg, #28171c, #120c0e);
+      border: 1px solid #684b28;
+      padding: 32px 20px;
+      border-radius: 14px;
+      text-align: center;
+      transition: 0.35s ease;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .game::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #e5b94c, transparent);
+      opacity: 0;
+      transition: 0.3s;
+    }
+
+    .game:hover {
+      transform: translateY(-9px);
+      border-color: #e5b94c;
+      box-shadow: 0 12px 30px rgba(229,185,76,0.12);
+    }
+
+    .game:hover::before {
+      opacity: 1;
+    }
+
+    .emoji {
+      font-size: 48px;
+      margin-bottom: 15px;
+      transition: 0.3s;
+    }
+
+    .game:hover .emoji {
+      transform: scale(1.15);
+    }
+
+    .game h3 {
+      color: #e5b94c;
+      margin-bottom: 12px;
+      font-size: 19px;
+    }
+
+    .game p {
+      color: #aaa;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .game-label {
+      display: inline-block;
+      margin-top: 18px;
+      color: #e5b94c;
+      font-size: 11px;
+      letter-spacing: 1px;
+      font-weight: bold;
+    }
+
+    /* LIVE STREAMING */
+    .live-container {
+      background: linear-gradient(145deg, #211619, #100b0c);
+      border: 1px solid #684b28;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    }
+
+    .live-screen {
+      position: relative;
+      background:
+        radial-gradient(circle, #28171c 0%, #080506 70%);
+      min-height: 320px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border: 1px solid #352126;
+    }
+
+    .live-badge {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      background: #c9002b;
+      color: white;
+      padding: 8px 14px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .live-content {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .live-icon {
+      font-size: 55px;
+      margin-bottom: 15px;
+    }
+
+    .live-content h3 {
+      color: #e5b94c;
+      font-size: 26px;
+      margin-bottom: 12px;
+      letter-spacing: 2px;
+    }
+
+    .live-content p {
+      color: #ddd;
+      margin-bottom: 12px;
+    }
+
+    .live-content span {
+      color: #888;
+      font-size: 12px;
+    }
+
+    .live-info {
+      padding: 20px 5px 5px;
+    }
+
+    .live-info h3 {
+      color: #e5b94c;
+      margin-bottom: 8px;
+    }
+
+    .live-info p {
+      color: #aaa;
+      font-size: 14px;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      background: #160d10;
+      border-top: 1px solid #684b28;
+      color: #888;
+      margin-top: 30px;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    footer strong {
+      color: #e5b94c;
+    }
+
+    /* MOBILE */
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        gap: 18px;
+        padding: 18px 15px;
+      }
+
+      .logo {
+        font-size: 22px;
+      }
+
+      nav {
+        gap: 22px;
+      }
+
+      .hero {
+        min-height: 350px;
+        padding: 75px 15px;
+      }
+
+      .hero-tag {
+        letter-spacing: 3px;
+      }
+
+      .hero p {
+        font-size: 13px;
+      }
+
+      .section {
+        padding: 45px 5%;
+      }
+
+      .section h2 {
+        font-size: 24px;
+      }
+
+      .games {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .game {
+        min-height: 200px;
+        padding: 25px 10px;
+      }
+
+      .emoji {
+        font-size: 38px;
+      }
+
+      .game h3 {
+        font-size: 16px;
+      }
+
+      .game p {
+        font-size: 12px;
+      }
+
+      .live-screen {
+        min-height: 240px;
+      }
+
+      .live-content h3 {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">AlloMunchen12</div>
+
+    <nav>
+  <a href="#">HOME</a>
+  <a href="#games">GAMES</a>
+  <a href="#live">LIVE</a>
+  <a href="login.html" class="login-link">LOGIN / DAFTAR</a>
+	</nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-tag">WELCOME TO ALLOMUNCHEN12</div>
+    <h1>Selamat Datang</h1>
+    <p>Premium Virtual Entertainment Experience</p>
+    <a href="#games" class="btn">EXPLORE GAMES</a>
+  </section>
+
+  <section class="section" id="games">
+
+    <div class="section-heading">
+      <span>DISCOVER YOUR FAVORITE</span>
+      <h2>🎮 GAME CENTER</h2>
+      <p>Pilih permainan virtual favoritmu dan nikmati hiburannya.</p>
+    </div>
+
+    <div class="games">
+
+      <a href="slots.html" class="game-link">
+        <div class="game">
+          <div class="emoji">🎰</div>
+          <h3>Virtual Slots</h3>
+          <p>Mesin slot dengan koin virtual.</p>
+          <div class="game-label">PLAY NOW →</div>
+        </div>
+      </a>
+
+      <a href="roulette.html" class="game-link">
+        <div class="game">
+          <div class="emoji">🎡</div>
+          <h3>Roulette</h3>
+          <p>Permainan roda keberuntungan.</p>
+          <div class="game-label">PLAY NOW →</div>
+        </div>
+      </a>
+
+      <a href="#" class="game-link">
+        <div class="game">
+          <div class="emoji">🃏</div>
+          <h3>Blackjack</h3>
+          <p>Permainan kartu melawan dealer virtual.</p>
+          <div class="game-label">COMING SOON</div>
+        </div>
+      </a>
+
+      <a href="#" class="game-link">
+        <div class="game">
+          <div class="emoji">🎲</div>
+          <h3>Dice</h3>
+          <p>Permainan dadu virtual.</p>
+          <div class="game-label">COMING SOON</div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <section class="section" id="live">
+
+    <div class="section-heading">
+      <span>WATCH AND ENJOY</span>
+      <h2>📺 LIVE STREAMING</h2>
+      <p>Tempat hiburan dan siaran langsung AlloMunchen12.</p>
+    </div>
+
+    <div class="live-container">
+
+      <div class="live-screen">
+        <div class="live-badge">● LIVE AREA</div>
+
+        <div class="live-content">
+          <div class="live-icon">📡</div>
+          <h3>ALLO LIVE STUDIO</h3>
+          <p>Welcome to AlloMunchen12 Live</p>
+          <span>Streaming area coming soon</span>
+        </div>
+      </div>
+
+      <div class="live-info">
+        <h3>Allo Live Channel</h3>
+        <p>Nikmati siaran dan hiburan langsung di sini.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <strong>AlloMunchen12</strong><br>
+    Premium Virtual Entertainment Experience<br>
+    Virtual entertainment only — no real-money gambling.<br>
+    © 2026 AlloMunchen12. All rights reserved.
+  </footer>
+
+</body>
+</html>

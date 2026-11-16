@@ -1,0 +1,547 @@
+```html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login - AlloMunchen12</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,#090909,#39000d,#090909);
+  font-family:Arial,sans-serif;
+  color:white;
+  padding:20px;
+}
+
+.login-box{
+  width:100%;
+  max-width:420px;
+  background:#171717;
+  border:1px solid #b38b32;
+  border-radius:16px;
+  padding:30px;
+  box-shadow:0 10px 40px #0009;
+}
+
+h1{
+  text-align:center;
+  color:#e5bd55;
+  margin-top:0;
+}
+
+p{
+  text-align:center;
+  color:#bbb;
+  font-size:14px;
+  line-height:1.5;
+}
+
+input{
+  width:100%;
+  padding:14px;
+  margin:9px 0;
+  border-radius:8px;
+  border:1px solid #555;
+  background:#242424;
+  color:white;
+  font-size:15px;
+}
+
+button{
+  width:100%;
+  padding:14px;
+  margin-top:12px;
+  border:0;
+  border-radius:8px;
+  background:#c9002b;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+button:hover{background:#a00022}
+
+.method-btn{
+  background:#292929;
+  border:1px solid #8b6a2d;
+}
+
+.method-btn.active{
+  background:linear-gradient(135deg,#c9002b,#780014);
+  border:1px solid #e5bd55;
+}
+
+.small-btn{
+  background:#333;
+  border:1px solid #b38b32;
+}
+
+#status{
+  margin-top:15px;
+  text-align:center;
+  font-size:14px;
+  line-height:1.5;
+  color:#e5bd55;
+  overflow-wrap:anywhere;
+}
+
+#phone-area,#otp-area{display:none}
+
+a{
+  color:#e5bd55;
+  text-decoration:none;
+}
+
+.back{
+  text-align:center;
+  margin-top:22px;
+}
+
+.divider{
+  border-top:1px solid #444;
+  margin:22px 0;
+}
+
+.hidden{display:none!important}
+</style>
+</head>
+
+<body>
+
+<div class="login-box">
+
+  <h1>ALLO MUNCHEN</h1>
+  <p>Masuk atau daftar untuk menggunakan akun AlloMunchen12</p>
+
+  <div>
+    <button id="email-method" class="method-btn active">
+      EMAIL & PASSWORD
+    </button>
+
+    <button id="phone-method" class="method-btn">
+      NOMOR HP (OTP)
+    </button>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- METODE EMAIL -->
+
+  <div id="email-area">
+
+    <div>
+      <button id="login-mode" class="method-btn active">
+        LOGIN
+      </button>
+
+      <button id="register-mode" class="method-btn">
+        DAFTAR
+      </button>
+    </div>
+
+    <input
+      id="email"
+      type="email"
+      placeholder="Masukkan alamat email"
+      autocomplete="email"
+    >
+
+    <input
+      id="password"
+      type="password"
+      placeholder="Masukkan kata sandi"
+      autocomplete="current-password"
+    >
+
+    <button id="email-submit">MASUK</button>
+
+    <button id="resend-btn" class="small-btn hidden">
+      KIRIM ULANG EMAIL VERIFIKASI
+    </button>
+
+    <button id="check-verified-btn" class="small-btn hidden">
+      SAYA SUDAH VERIFIKASI
+    </button>
+
+  </div>
+
+  <!-- METODE NOMOR HP -->
+
+  <div id="phone-area">
+
+    <input
+      id="phone"
+      type="tel"
+      placeholder="Contoh: 081234567890"
+    >
+
+    <div id="recaptcha-container"></div>
+
+    <button id="send-btn">KIRIM KODE OTP</button>
+
+  </div>
+
+  <div id="otp-area">
+
+    <input
+      id="otp"
+      type="text"
+      placeholder="Masukkan kode OTP SMS"
+      maxlength="6"
+    >
+
+    <button id="verify-btn">VERIFIKASI OTP</button>
+
+  </div>
+
+  <div id="status"></div>
+
+  <div class="back">
+    <a href="index.html">← Kembali ke Beranda</a>
+  </div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from
+"https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js";
+
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  sendEmailVerification,
+  sendPasswordResetEmail,
+  signOut,
+  reload,
+  RecaptchaVerifier,
+  signInWithPhoneNumber
+} from
+"https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js";
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDM4W1kZfKES2svx8z7IVNWeoF9c8FdDuI",
+  authDomain: "allomunchen12.firebaseapp.com",
+  projectId: "allomunchen12",
+  storageBucket: "allomunchen12.firebasestorage.app",
+  messagingSenderId: "371986330064",
+  appId: "1:371986330064:web:e8f0e62ca8d62f1a2f89d5",
+  measurementId: "G-T043BCC1YX"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+const status = document.getElementById("status");
+
+let mode = "login";
+let confirmationResult = null;
+let recaptcha = null;
+let currentEmailUser = null;
+
+
+// GANTI METODE LOGIN
+
+document.getElementById("email-method").onclick = () => {
+
+  document.getElementById("email-area").style.display = "block";
+  document.getElementById("phone-area").style.display = "none";
+  document.getElementById("otp-area").style.display = "none";
+
+  document.getElementById("email-method").classList.add("active");
+  document.getElementById("phone-method").classList.remove("active");
+
+  status.textContent = "";
+};
+
+document.getElementById("phone-method").onclick = async () => {
+
+  document.getElementById("email-area").style.display = "none";
+  document.getElementById("phone-area").style.display = "block";
+  document.getElementById("otp-area").style.display = "none";
+
+  document.getElementById("phone-method").classList.add("active");
+  document.getElementById("email-method").classList.remove("active");
+
+  status.textContent = "";
+
+  if (!recaptcha) {
+    try {
+      recaptcha = new RecaptchaVerifier(auth, "recaptcha-container", {
+        size: "normal"
+      });
+
+      await recaptcha.render();
+
+    } catch(error) {
+      status.textContent = "reCAPTCHA gagal: " + error.message;
+    }
+  }
+};
+
+
+// MODE LOGIN / DAFTAR
+
+function setMode(newMode) {
+
+  mode = newMode;
+
+  document.getElementById("login-mode").classList.toggle(
+    "active", mode === "login"
+  );
+
+  document.getElementById("register-mode").classList.toggle(
+    "active", mode === "register"
+  );
+
+  document.getElementById("email-submit").textContent =
+    mode === "login" ? "MASUK" : "DAFTAR";
+
+  document.getElementById("password").autocomplete =
+    mode === "login" ? "current-password" : "new-password";
+
+  document.getElementById("resend-btn").classList.add("hidden");
+  document.getElementById("check-verified-btn").classList.add("hidden");
+
+  status.textContent = "";
+}
+
+document.getElementById("login-mode").onclick = () => setMode("login");
+document.getElementById("register-mode").onclick = () => setMode("register");
+
+
+// LOGIN / DAFTAR EMAIL
+
+document.getElementById("email-submit").onclick = async () => {
+
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+
+  if (!email || !password) {
+    status.textContent = "Isi email dan kata sandi terlebih dahulu.";
+    return;
+  }
+
+  try {
+
+    status.textContent = "Memproses akun...";
+
+    if (mode === "register") {
+
+      const result = await createUserWithEmailAndPassword(
+        auth, email, password
+      );
+
+      currentEmailUser = result.user;
+
+      await sendEmailVerification(currentEmailUser);
+
+      document.getElementById("resend-btn").classList.remove("hidden");
+      document.getElementById("check-verified-btn").classList.remove("hidden");
+
+      status.textContent =
+        "Pendaftaran berhasil! Silakan buka email kamu dan klik tautan verifikasi. Periksa juga folder Spam.";
+
+    } else {
+
+      const result = await signInWithEmailAndPassword(
+        auth, email, password
+      );
+
+      await reload(result.user);
+
+      if (!result.user.emailVerified) {
+
+        currentEmailUser = result.user;
+
+        document.getElementById("resend-btn").classList.remove("hidden");
+        document.getElementById("check-verified-btn").classList.remove("hidden");
+
+        status.textContent =
+          "Email belum diverifikasi. Silakan buka email dan klik tautan verifikasi.";
+
+        await signOut(auth);
+
+        return;
+      }
+
+      window.location.href = "member.html";
+
+    }
+
+  } catch(error) {
+
+    const errors = {
+      "auth/email-already-in-use": "Email sudah terdaftar. Silakan login.",
+      "auth/invalid-email": "Format email tidak valid.",
+      "auth/weak-password": "Kata sandi minimal 6 karakter.",
+      "auth/invalid-credential": "Email atau kata sandi salah.",
+      "auth/user-not-found": "Akun tidak ditemukan.",
+      "auth/wrong-password": "Kata sandi salah.",
+      "auth/too-many-requests": "Terlalu banyak percobaan. Coba lagi nanti."
+    };
+
+    status.textContent =
+      errors[error.code] || "Gagal: " + error.message;
+
+  }
+};
+
+
+// KIRIM ULANG EMAIL VERIFIKASI
+
+document.getElementById("resend-btn").onclick = async () => {
+
+  try {
+
+    if (!currentEmailUser) {
+      status.textContent = "Silakan login kembali untuk mengirim ulang verifikasi.";
+      return;
+    }
+
+    await sendEmailVerification(currentEmailUser);
+
+    status.textContent = "Email verifikasi berhasil dikirim ulang.";
+
+  } catch(error) {
+
+    status.textContent = "Gagal mengirim email: " + error.message;
+
+  }
+};
+
+
+// CEK STATUS VERIFIKASI
+
+document.getElementById("check-verified-btn").onclick = async () => {
+
+  try {
+
+    if (!currentEmailUser) {
+      status.textContent = "Silakan login kembali terlebih dahulu.";
+      return;
+    }
+
+    await reload(currentEmailUser);
+
+    if (currentEmailUser.emailVerified) {
+
+      await signOut(auth);
+
+      currentEmailUser = null;
+
+      document.getElementById("resend-btn").classList.add("hidden");
+      document.getElementById("check-verified-btn").classList.add("hidden");
+
+      status.textContent =
+        "Email berhasil diverifikasi! Sekarang silakan login.";
+
+    } else {
+
+      status.textContent =
+        "Email belum terverifikasi. Silakan klik tautan di email kamu.";
+
+    }
+
+  } catch(error) {
+
+    status.textContent = "Gagal memeriksa email: " + error.message;
+
+  }
+};
+
+
+// NOMOR HP DAN OTP
+
+document.getElementById("send-btn").onclick = async () => {
+
+  let phone = document.getElementById("phone").value.trim();
+
+  if (phone.startsWith("0")) {
+    phone = "+62" + phone.substring(1);
+  } else if (phone.startsWith("62")) {
+    phone = "+" + phone;
+  }
+
+  if (!phone.startsWith("+62")) {
+    status.textContent = "Gunakan nomor HP Indonesia.";
+    return;
+  }
+
+  try {
+
+    status.textContent = "Mengirim kode OTP...";
+
+    if (!recaptcha) {
+      recaptcha = new RecaptchaVerifier(auth, "recaptcha-container", {
+        size: "normal"
+      });
+      await recaptcha.render();
+    }
+
+    confirmationResult = await signInWithPhoneNumber(
+      auth, phone, recaptcha
+    );
+
+    document.getElementById("phone-area").style.display = "none";
+    document.getElementById("otp-area").style.display = "block";
+
+    status.textContent = "Kode OTP sudah dikirim melalui SMS.";
+
+  } catch(error) {
+
+    status.textContent = "Gagal: " + error.message;
+
+    if (recaptcha) {
+      recaptcha.clear();
+      recaptcha = null;
+    }
+
+  }
+};
+
+
+// VERIFIKASI OTP
+
+document.getElementById("verify-btn").onclick = async () => {
+
+  const code = document.getElementById("otp").value.trim();
+
+  if (!confirmationResult) {
+    status.textContent = "Silakan minta kode OTP terlebih dahulu.";
+    return;
+  }
+
+  try {
+
+    status.textContent = "Memverifikasi kode...";
+
+    const result = await confirmationResult.confirm(code);
+
+    status.textContent = "Berhasil masuk! Selamat datang.";
+
+    console.log("Pengguna:", result.user.uid);
+
+  } catch(error) {
+
+    status.textContent = "Kode OTP salah atau kedaluwarsa.";
+
+  }
+
+};
+
+</script>
+
+</body>
+</html>
+```
